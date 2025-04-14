@@ -15,8 +15,8 @@ if __name__ == "__main__":
     path_availability = here / "data" / "availability_NLD.tif"
     path_spatial_units = here / "data" / "regional_NLD.geojson"
     path_cutout = here / "results" / "cutout_era5.nc"
-    path_cf_pv = here / "results" / "cf_pv_layout_raster.nc"
-    path_cf_wind = here / "results" / "cf_wind_layout_raster.nc"
+    path_cf_pv = here / "results" / "cf_pv_layout_raster_to_raster.nc"
+    path_cf_wind = here / "results" / "cf_wind_layout_raster_to_raster.nc"
 
     # load data
     cutout = atlite.Cutout(path_cutout)
@@ -32,20 +32,24 @@ if __name__ == "__main__":
         nodata=0
     )
 
+    # experimental/hacky: create a matrix with an extra dimension with a coordinate 
+    # for each pixel to "aggregate" to each pixel, which means not aggregating.
+    matrix = layout.stack(spatial=["y", "x"])
+    matrix = matrix.expand_dims(dim={"name":matrix.spatial.values}, axis=0)
+    matrix = matrix.data
+
     # compute capacity factors
     capacityfactors_pv = cutout.pv(
         panel="CSi", 
         orientation={"slope": 30.0, "azimuth": 180.0}, 
-        layout=layout,
-        shapes=spatial_units,
+        matrix=matrix,
         per_unit=True,
     )
     capacityfactors_pv.to_netcdf(path_cf_pv)
 
     capacityfactors_wind = cutout.wind(
         turbine="Vestas_V90_3MW", 
-        layout=layout,
-        shapes=spatial_units,
+        matrix=matrix,
         per_unit=True,
     )
     capacityfactors_wind.to_netcdf(path_cf_wind)
