@@ -1,0 +1,10 @@
+name: atlite
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - pyyaml
+  - atlite
+  - rioxarray
+  - rasterio
+  - geopandas
