@@ -24,14 +24,6 @@ Provide a raster layout, aggregate results to polygons. See `prepare_cf_from_ras
 
 Provide a point layout, aggregate results to polygons. See `prepare_cf_from_point_layout.py`
 
-Provide no layout, get capacity factors as raster at the resolution of the cutout. Same as one of the above, but do not pass `shapes`, `layout`, `matrix`, `per_unit`. Instead, pass `capacity_factor_timeseries=True`. For example:
-
-```
-cutout = atlite.Cutout(path_cutout)
-capacityfactors_wind = cutout.wind(
-    turbine="Vestas_V90_3MW",
-    capacity_factor_timeseries=True
-)
-```
+Provide no layout, get capacity factors as raster at the resolution of the cutout. Same as one of the above, but do not pass `shapes`, `layout`, `matrix`, `per_unit`. Instead, pass `capacity_factor_timeseries=True`. See `prepare_cf_from_raster_no_layout_to_raster.py`.
 
 Provide a raster or point layout, do not aggregate, get capacity factors as raster at cutout resolution. See `prepare_cf_from_raster_layout_to_raster.py`.
