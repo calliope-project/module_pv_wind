@@ -1,2 +1,4 @@
 # A minimal example of how to configure this module
-dummy_text: This is a user input.
+backend: atlite
+layout: raster  # raster or point
+aggregate: true
