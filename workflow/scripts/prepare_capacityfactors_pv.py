@@ -16,7 +16,8 @@ def read_yaml(filepath):
 if __name__ == "__main__":
     cutout = atlite.Cutout(snakemake.input.cutout)
     layout = rxr.open_rasterio(snakemake.input.layout)
-    spatial_units = gpd.read_file(snakemake.input.spatial_units).set_index("id")
+    spatial_units = gpd.read_file(snakemake.input.spatial_units)
+    spatial_units = spatial_units.set_index(spatial_units.columns[0])
     tech_specs = read_yaml(snakemake.input.tech_specs)
 
     # resample layout to the resolution of the cutout
