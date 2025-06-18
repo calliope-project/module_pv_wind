@@ -1,6 +1,6 @@
 rule download_cutout:
     output:
-        "results/cutout.nc",
+        "results/cutout_era5_download.nc",
     conda:
         "../envs/geo.yaml"
     script:
@@ -9,14 +9,12 @@ rule download_cutout:
 
 rule prepare_capacityfactors_wind:
     input:
-        cutout=ancient("resources/user/era5.nc"),
-        layout="resources/user/layout_{tech}.tif",
-        spatial_units="resources/user/spatial_units/{resolution}.geojson",
-        tech_specs="resources/user/tech_specs/{tech}_{subtech}.yaml",
+        cutout=ancient("resources/user/cutout_{name_cutout}.nc"),  # TODO: Replace with results/cutout.nc as soon as the download works again
+        tech_specs="resources/user/tech_specs_{name_tech}.yaml",
+        layout="resources/user/layout_{name_layout}.tif",
+        spatial_units="resources/user/spatial_units_{name_spatial_units}.geojson",
     output:
-        "results/{resolution}/capacityfactors_{tech}_{subtech}.nc",
-    wildcard_constraints:
-        tech="wind_offshore|wind_onshore",
+        "results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
     conda:
         "../envs/atlite.yaml"
     script:
@@ -25,14 +23,12 @@ rule prepare_capacityfactors_wind:
 
 rule prepare_capacityfactors_pv:
     input:
-        cutout=ancient("resources/user/era5.nc"),
-        layout="resources/user/layout_{tech}.tif",
-        spatial_units="resources/user/spatial_units/{resolution}.geojson",
-        tech_specs="resources/user/tech_specs/{tech}_{subtech}.yaml",
+        cutout=ancient("resources/user/cutout_{name_cutout}.nc"),  # TODO: Replace with results/cutout.nc as soon as the download works again
+        tech_specs="resources/user/tech_specs_{name_tech}.yaml",
+        layout="resources/user/layout_{name_layout}.tif",
+        spatial_units="resources/user/spatial_units_{name_spatial_units}.geojson",
     output:
-        "results/{resolution}/capacityfactors_{tech}_{subtech}.nc",
-    wildcard_constraints:
-        tech="pv_rooftop|pv_open_field",
+        "results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
     conda:
         "../envs/atlite.yaml"
     script:
