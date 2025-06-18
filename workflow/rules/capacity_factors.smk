@@ -7,7 +7,7 @@ rule download_cutout:
         "../scripts/download_cutout.py"
 
 
-rule prepare_capacityfactors_wind:
+rule prepare_capacityfactors:
     input:
         cutout=ancient("resources/user/cutout_{name_cutout}.nc"),  # TODO: Replace with results/cutout.nc as soon as the download works again
         tech_specs="resources/user/tech_specs_{name_tech}.yaml",
@@ -18,18 +18,4 @@ rule prepare_capacityfactors_wind:
     conda:
         "../envs/atlite.yaml"
     script:
-        "../scripts/prepare_capacityfactors_wind.py"
-
-
-rule prepare_capacityfactors_pv:
-    input:
-        cutout=ancient("resources/user/cutout_{name_cutout}.nc"),  # TODO: Replace with results/cutout.nc as soon as the download works again
-        tech_specs="resources/user/tech_specs_{name_tech}.yaml",
-        layout="resources/user/layout_{name_layout}.tif",
-        spatial_units="resources/user/spatial_units_{name_spatial_units}.geojson",
-    output:
-        "results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
-    conda:
-        "../envs/atlite.yaml"
-    script:
-        "../scripts/prepare_capacityfactors_pv.py"
+        "../scripts/prepare_capacityfactors.py"

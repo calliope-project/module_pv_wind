@@ -1,4 +1,4 @@
-"""Prepare wind capacityfactors, given a cutout, a layout, spatial units to aggregate to and technology specifications."""
+"""Prepare PV capacityfactors, given a cutout, a layout, spatial units to aggregate to and technology specifications."""
 
 import atlite
 import geopandas as gpd
@@ -31,7 +31,11 @@ if __name__ == "__main__":
         match, resampling=rio.enums.Resampling.sum, nodata=0
     )
 
-    capacityfactors_wind = cutout.wind(
-        shapes=spatial_units, layout=layout_matched, **tech_specs
+    tech = tech_specs["tech"]
+    specs = tech_specs["specs"]
+    get_capacityfactors = getattr(cutout, tech)
+
+    capacityfactors = get_capacityfactors(
+        shapes=spatial_units, layout=layout_matched, **specs
     )
-    capacityfactors_wind.to_netcdf(snakemake.output[0])
+    capacityfactors.to_netcdf(snakemake.output[0])
