@@ -3,6 +3,10 @@ description: "Schema for user-provided configuration files."
 type: object
 additionalProperties: false
 properties:
+  download_cutout:
+    type: boolean
+    default: false
+    description: "Whether to download the cutout automatically or use a user-provided one."
   backend:
     type: string
     enum: ["atlite"]
@@ -14,3 +18,37 @@ properties:
   aggregate:
     type: boolean
     description: "Whether to aggregate the data to spatial_units or not."
+  # if download_cutout is True, need to provide these parameters, which are used to download the cutout
+  cutout_params:
+    type: object
+    properties:
+      module:
+        type: string
+        enum: ["era5"]
+        description: "The module to use for downloading the cutout."
+      x:
+        type: array
+        items:
+          type: number
+        description: "Longitude coordinates for the cutout."
+      y:
+        type: array
+        items:
+          type: number
+        description: "Latitude coordinates for the cutout."
+      snapshots:
+        type: object
+        properties:
+          start:
+            type: string
+            format: date-time
+            description: "Start date for the snapshots."
+          end:
+            type: string
+            format: date-time
+            description: "End date for the snapshots."
+          inclusive:
+            type: string
+            enum: ["left", "right"]
+            description: "Whether the start or end date is inclusive."
+    description: "Parameters for downloading the cutout if download_cutout is True."

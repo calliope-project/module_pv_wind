@@ -1,11 +1,12 @@
+"""Download a cutout using atlite."""
+
 import atlite
 import pandas as pd
 
-
 if __name__ == "__main__":
-    cutout_params = snakemake.config["build_cutout"]["cutout_params"]
+    cutout_params = snakemake.config["cutout_params"]
 
-    snapshots = pd.date_range(freq="h", **snakemake.config["snapshots"])
+    snapshots = pd.date_range(freq="h", **cutout_params["snapshots"])
     time = [snapshots[0], snapshots[-1]]
     cutout_params["time"] = slice(*cutout_params.get("time", time))
 
