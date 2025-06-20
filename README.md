@@ -1,6 +1,6 @@
-# PV and wind area potentials and capacity factors 
+# PV and wind capacity factors
 
-This data module produces area potentials and capacity factors for PV and wind at arbitrary spatial resolution.
+This data module produces capacity factors for PV and wind at arbitrary spatial resolution.
 
 A modular `snakemake` workflow built for [`clio`](https://clio.readthedocs.io/) data modules.
 
