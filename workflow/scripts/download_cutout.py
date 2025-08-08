@@ -16,6 +16,8 @@ if __name__ == "__main__":
     cutout_params["time"] = slice(*cutout_params["time"])
 
     features = cutout_params.pop("features", None)
-    cutout = atlite.Cutout(snakemake.output[0], **cutout_params)
+    monthly_requests = cutout_params.pop("monthly_requests", False)
+    logger.info(f"Preparing cutout with cutout_params: {cutout_params}")
     logger.info(f"Preparing cutout with features: {features}")
-    cutout.prepare(features=features)
+    cutout = atlite.Cutout(snakemake.output[0], **cutout_params)
+    cutout.prepare(features=features, monthly_requests=monthly_requests)
