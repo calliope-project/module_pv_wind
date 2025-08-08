@@ -7,7 +7,5 @@ cutout_params:
   module: era5
   x: [3.4, 7.2]
   y: [50.7, 53.5]
-  snapshots:
-      start: "2017-01-01"
-      end: "2017-02-01"
-      inclusive: 'left'
+  time: ["2017-01", "2017-02"]
+  features: ['height', 'wind', 'influx', 'temperature']
