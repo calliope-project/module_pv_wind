@@ -1,7 +1,13 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 description: "Schema for user-provided configuration files."
 type: object
+required:
+  - download_cutout
+  - backend
+  - layout
+  - aggregate
 additionalProperties: false
+
 properties:
   download_cutout:
     type: boolean
@@ -21,6 +27,12 @@ properties:
   # if download_cutout is True, need to provide these parameters, which are used to download the cutout
   cutout_params:
     type: object
+    required:
+      - module
+      - x
+      - y
+      - time
+    additionalProperties: false
     properties:
       module:
         type: string
@@ -36,19 +48,15 @@ properties:
         items:
           type: number
         description: "Latitude coordinates for the cutout."
-      snapshots:
-        type: object
-        properties:
-          start:
-            type: string
-            format: date-time
-            description: "Start date for the snapshots."
-          end:
-            type: string
-            format: date-time
-            description: "End date for the snapshots."
-          inclusive:
-            type: string
-            enum: ["left", "right"]
-            description: "Whether the start or end date is inclusive."
+      time:
+        type: array
+        items:
+          type: string
+          format: date-time
+        description: "Time range for the cutout in ISO 8601 format."
+      features:
+        type: array
+        items:
+          type: string
+        description: "List of features to include in the cutout."
     description: "Parameters for downloading the cutout if download_cutout is True."
