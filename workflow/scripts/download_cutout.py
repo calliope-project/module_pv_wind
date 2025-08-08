@@ -1,18 +1,21 @@
 """Download a cutout using atlite."""
 
+import logging
+
 import atlite
-import pandas as pd
+
+logger = logging.getLogger(__name__)
+
 
 if __name__ == "__main__":
+    logger.info(f"Using atlite version: {atlite.__version__}")
     cutout_params = snakemake.config["cutout_params"]
-
-    snapshots = pd.date_range(freq="h", **cutout_params["snapshots"])
-    time = [snapshots[0], snapshots[-1]]
-    cutout_params["time"] = slice(*cutout_params.get("time", time))
 
     cutout_params["x"] = slice(*cutout_params["x"])
     cutout_params["y"] = slice(*cutout_params["y"])
+    cutout_params["time"] = slice(*cutout_params["time"])
 
     features = cutout_params.pop("features", None)
     cutout = atlite.Cutout(snakemake.output[0], **cutout_params)
+    logger.info(f"Preparing cutout with features: {features}")
     cutout.prepare(features=features)
