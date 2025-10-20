@@ -20,6 +20,7 @@ if __name__ == "__main__":
     tech_specs = read_yaml(snakemake.input.tech_specs)
 
     layout = rxr.open_rasterio(snakemake.input.layout, masked=True)
+    layout = layout.fillna(0)
 
     capacityfactors = backend_atlite.cf_agg_from_raster_layout(
         cutout=cutout, layout=layout, spatial_units=spatial_units, tech_specs=tech_specs
