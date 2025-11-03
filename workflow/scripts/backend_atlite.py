@@ -27,9 +27,7 @@ def cf_agg_from_point_layout(
     specs = tech_specs["specs"]
     get_capacityfactors = getattr(cutout, tech)
 
-    capacityfactors = get_capacityfactors(
-        shapes=spatial_units, layout=layout, per_unit=True, **specs
-    )
+    capacityfactors = get_capacityfactors(shapes=spatial_units, layout=layout, **specs)
 
     return capacityfactors
 
