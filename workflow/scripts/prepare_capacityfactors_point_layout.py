@@ -12,14 +12,19 @@ def read_yaml(filepath):
         return yaml.safe_load(file)
 
 
-if __name__ == "__main__":
-    path_cutout = snakemake.input.cutout
-    spatial_units = gpd.read_file(snakemake.input.spatial_units)
+def prepare_capacityfactors_point_layout(
+    path_cutout, path_spatial_units, path_tech_specs, path_layout, path_output
+):
+    """Prepare capacityfactors aggregated to spatial units weighted by a point layout."""
+    # load inputs
+    spatial_units = gpd.read_file(path_spatial_units)
+    layout = pd.read_csv(path_layout)
+    tech_specs = read_yaml(path_tech_specs)
+
+    # prepare inputs
     spatial_units = spatial_units.set_index(spatial_units.columns[0])
-    tech_specs = read_yaml(snakemake.input.tech_specs)
 
-    layout = pd.read_csv(snakemake.input.layout)
-
+    # compute capacityfactors
     capacityfactors = backend_atlite.cf_agg_from_point_layout(
         path_cutout=path_cutout,
         layout=layout,
@@ -27,4 +32,15 @@ if __name__ == "__main__":
         tech_specs=tech_specs,
     )
 
-    capacityfactors.to_netcdf(snakemake.output[0])
+    # save output
+    capacityfactors.to_netcdf(path_output)
+
+
+if __name__ == "__main__":
+    prepare_capacityfactors_point_layout(
+        path_cutout=snakemake.input.cutout,
+        path_spatial_units=snakemake.input.spatial_units,
+        path_tech_specs=snakemake.input.tech_specs,
+        path_layout=snakemake.input.layout,
+        path_output=snakemake.output[0],
+    )
