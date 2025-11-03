@@ -1,6 +1,5 @@
 """Prepare PV capacityfactors, given a cutout, a layout, spatial units to aggregate to and technology specifications."""
 
-import atlite
 import backend_atlite
 import geopandas as gpd
 import pandas as pd
@@ -14,7 +13,7 @@ def read_yaml(filepath):
 
 
 if __name__ == "__main__":
-    cutout = atlite.Cutout(snakemake.input.cutout)
+    path_cutout = snakemake.input.cutout
     spatial_units = gpd.read_file(snakemake.input.spatial_units)
     spatial_units = spatial_units.set_index(spatial_units.columns[0])
     tech_specs = read_yaml(snakemake.input.tech_specs)
@@ -22,7 +21,10 @@ if __name__ == "__main__":
     layout = pd.read_csv(snakemake.input.layout)
 
     capacityfactors = backend_atlite.cf_agg_from_point_layout(
-        cutout=cutout, layout=layout, spatial_units=spatial_units, tech_specs=tech_specs
+        path_cutout=path_cutout,
+        layout=layout,
+        spatial_units=spatial_units,
+        tech_specs=tech_specs,
     )
 
     capacityfactors.to_netcdf(snakemake.output[0])
