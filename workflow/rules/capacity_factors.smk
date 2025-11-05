@@ -7,7 +7,8 @@ if config["layout"] == "raster":
             layout="resources/user/layout/{name_layout}.tif",
             spatial_units="resources/user/spatial_units/{name_spatial_units}.geojson",
         output:
-            "results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
+            data="results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
+            plot_map="results/{name_cutout}/{name_spatial_units}/{name_layout}/annual_capacity_factors_{name_tech}_map.png",
         conda:
             "../envs/atlite.yaml"
         script:
@@ -22,7 +23,8 @@ elif config["layout"] == "point":
             layout="resources/user/layout/{name_layout}.csv",
             spatial_units="resources/user/spatial_units/{name_spatial_units}.geojson",
         output:
-            "results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
+            data="results/{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc",
+            plot_map="results/{name_cutout}/{name_spatial_units}/{name_layout}/annual_capacity_factors_{name_tech}_map.png",
         conda:
             "../envs/atlite.yaml"
         script:

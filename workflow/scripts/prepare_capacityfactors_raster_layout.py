@@ -1,8 +1,10 @@
 """Prepare PV capacityfactors, given a cutout, a layout, spatial units to aggregate to and technology specifications."""
 
+import _plots
 import backend_atlite
 import geopandas as gpd
 import rioxarray as rxr
+import xarray as xr
 import yaml
 
 
@@ -37,11 +39,31 @@ def prepare_capacityfactors_raster_layout(
     capacityfactors.to_netcdf(path_output)
 
 
+def plot(path_capacityfactors, path_spatial_units, path_map):
+    """Plot capacityfactors."""
+    # load inputs
+    cf = xr.open_dataarray(path_capacityfactors)
+    spatial_units = gpd.read_file(path_spatial_units)
+    spatial_units = spatial_units.set_index(spatial_units.columns[0])
+    gdf_mean_cf = spatial_units.join(
+        cf.mean(dim="time").to_dataframe(name="wind_onshore")
+    )
+
+    # plot a map of annual capacityfactors
+    fig, ax = _plots.map_capacity_factor(gdf_mean_cf=gdf_mean_cf, column="wind_onshore")
+    fig.savefig(path_map)
+
+
 if __name__ == "__main__":
     prepare_capacityfactors_raster_layout(
         path_cutout=snakemake.input.cutout,
         path_spatial_units=snakemake.input.spatial_units,
         path_tech_specs=snakemake.input.tech_specs,
         path_layout=snakemake.input.layout,
-        path_output=snakemake.output[0],
+        path_output=snakemake.output.data,
+    )
+    plot(
+        path_capacityfactors=snakemake.output.data,
+        path_spatial_units=snakemake.input.spatial_units,
+        path_map=snakemake.output.plot_map,
     )
