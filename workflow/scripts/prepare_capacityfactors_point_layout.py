@@ -62,7 +62,7 @@ if __name__ == "__main__":
         path_output=snakemake.output.data,
     )
     plot(
-        path_output=snakemake.output.data,
+        path_capacityfactors=snakemake.output.data,
         path_spatial_units=snakemake.input.spatial_units,
         path_map=snakemake.output.plot_map,
     )
