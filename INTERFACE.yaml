@@ -1,20 +1,12 @@
 # Module Input-Output structure for automated doc. generation
 resources:
   user:
-    user_message.md: "Example file emulating external files requested from a user."
+    "cutout_{name_cutout}.nc": Cutout of meteorological data provided by user.
+    "tech_specs/{name_tech}.yaml": Technology specification of PV/wind.
+    "layout/{name_layout}.tif": Raster layout file describing the spatial distribution of capacity.
+    "layout/{name_layout}.parquet": Point layout file describing the spatial distribution of capacity.
+    "spatial_units/{name_spatial_units}.parquet": Geometries of spatial units (e.g., administrative regions).
   automatic:
-    dummy_readme.md: "Example file emulating downloads determined by internal settings."
+    "cutout_era5.nc": Cutout of meteorological data downloaded from ERA5.
 results:
-  combined_text.md: "Example file emulating module results."
-
-# Wildcard example:
-# resources:
-#   user:
-#     shapes_{resolution}.geojson: region geometries.
-#   automatic:
-#     technology_data.parquet: dataset with technology characteristics.
-# results:
-#   '{resolution}/tech_capacity.parquet': description of output data.
-#   '{resolution}/results_image.png': description of output image.
-# wildcards:
-#   resolution: description of the wildcard’s purpose.
+  "{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc": Capacity factors for the specified technology.
