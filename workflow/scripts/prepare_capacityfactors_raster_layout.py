@@ -6,6 +6,7 @@ import geopandas as gpd
 import rioxarray as rxr
 import xarray as xr
 import yaml
+from _schemas import Shapes
 
 
 def read_yaml(filepath):
@@ -20,11 +21,12 @@ def prepare_capacityfactors_raster_layout(
     """Prepare capacityfactors aggregated to spatial units weighted by a raster layout."""
     # load inputs
     spatial_units = gpd.read_parquet(path_spatial_units)
+    spatial_units = Shapes.validate(spatial_units)
     tech_specs = read_yaml(path_tech_specs)
     layout = rxr.open_rasterio(path_layout, masked=True)
 
     # prepare inputs
-    spatial_units = spatial_units.set_index(spatial_units.columns[0])
+    spatial_units = spatial_units.set_index("shape_id")
     layout = layout.fillna(0)
 
     # compute capacityfactors
@@ -44,7 +46,9 @@ def plot(path_capacityfactors, path_spatial_units, path_map):
     # load inputs
     cf = xr.open_dataarray(path_capacityfactors)
     spatial_units = gpd.read_parquet(path_spatial_units)
-    spatial_units = spatial_units.set_index(spatial_units.columns[0])
+    spatial_units = Shapes.validate(spatial_units)
+    spatial_units = spatial_units.set_index("shape_id")
+
     gdf_mean_cf = spatial_units.join(
         cf.mean(dim="time").to_dataframe(name="wind_onshore")
     )

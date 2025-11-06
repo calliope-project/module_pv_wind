@@ -6,6 +6,7 @@ import geopandas as gpd
 import pandas as pd
 import xarray as xr
 import yaml
+from _schemas import PointLayout, Shapes
 
 
 def read_yaml(filepath):
@@ -20,11 +21,13 @@ def prepare_capacityfactors_point_layout(
     """Prepare capacityfactors aggregated to spatial units weighted by a point layout."""
     # load inputs
     spatial_units = gpd.read_parquet(path_spatial_units)
-    layout = pd.read_csv(path_layout)
+    spatial_units = Shapes.validate(spatial_units)
+    layout = pd.read_csv(path_layout, index_col=0)
+    layout = PointLayout.validate(layout)
     tech_specs = read_yaml(path_tech_specs)
 
     # prepare inputs
-    spatial_units = spatial_units.set_index(spatial_units.columns[0])
+    spatial_units = spatial_units.set_index("shape_id")
 
     # compute capacityfactors
     capacityfactors = backend_atlite.cf_agg_from_point_layout(
@@ -43,7 +46,8 @@ def plot(path_capacityfactors, path_spatial_units, path_map):
     # load inputs
     cf = xr.open_dataarray(path_capacityfactors)
     spatial_units = gpd.read_parquet(path_spatial_units)
-    spatial_units = spatial_units.set_index(spatial_units.columns[0])
+    spatial_units = Shapes.validate(spatial_units)
+    spatial_units = spatial_units.set_index("shape_id")
     gdf_mean_cf = spatial_units.join(
         cf.mean(dim="time").to_dataframe(name="wind_onshore")
     )

@@ -25,7 +25,7 @@ def average_capacity_factors(
 
 def map_capacity_factor(gdf_mean_cf, column, figsize=(4, 4)):
     fig, ax = plt.subplots(figsize=figsize, tight_layout=True)
-    print(gdf_mean_cf)
+
     gdf_mean_cf.plot(ax=ax, column=column, cmap=cmap_wind, legend=True, aspect=None)
     gdf_mean_cf.geometry.boundary.plot(ax=ax, color="black", linewidth=0.5)
     ax.set_title("Average Capacity Factor\nOnshore Wind")
