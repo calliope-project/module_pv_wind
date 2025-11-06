@@ -24,7 +24,6 @@ workflow.source_path("scripts/backend_atlite.py")
 # Add all your includes here.
 include: "rules/automatic.smk"
 include: "rules/capacity_factors.smk"
-include: "rules/plot.smk"
 
 
 rule all:
