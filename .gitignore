@@ -24,3 +24,6 @@ gurobi.log
 **/results/*
 **/temp/*
 **/tmp/*
+
+# Manually downloaded test files
+tests/files
