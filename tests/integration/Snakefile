@@ -34,7 +34,7 @@ rule copy_user_resources:
 # Import the module and configure it to use a raster layout.
 # `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
 # `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
-module module_pv_wind:
+module module_pv_wind_raster:
     snakefile:
         "../../workflow/Snakefile"
     config:
@@ -44,7 +44,7 @@ module module_pv_wind:
 
 
 # rename all module rules with a prefix, to avoid naming conflicts.
-use rule * from module_pv_wind as module_pv_wind_*
+use rule * from module_pv_wind_raster as module_pv_wind_raster_*
 
 
 # Request something from the module
@@ -66,7 +66,7 @@ rule europe_raster:
 # Import the module and configure it to use a point layout.
 # `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
 # `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
-module module_pv_wind:
+module module_pv_wind_point:
     snakefile:
         "../../workflow/Snakefile"
     config:
@@ -76,7 +76,7 @@ module module_pv_wind:
 
 
 # rename all module rules with a prefix, to avoid naming conflicts.
-use rule * from module_pv_wind as module_pv_wind_*
+use rule * from module_pv_wind_point as module_pv_wind_point_*
 
 
 # Request something from the module

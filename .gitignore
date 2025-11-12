@@ -11,6 +11,9 @@
 __pycache__
 *.pyc
 
+### Environments
+.pixi/
+
 ### Snakemake
 .snakemake/
 gurobi.log
@@ -24,6 +27,3 @@ gurobi.log
 **/results/*
 **/temp/*
 **/tmp/*
-
-# Manually downloaded test files
-tests/files

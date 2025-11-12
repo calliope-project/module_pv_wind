@@ -10,3 +10,8 @@ resources:
     "cutout_era5.nc": Cutout of meteorological data downloaded from ERA5.
 results:
   "{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc": Capacity factors for the specified technology.
+wildcards:
+  name_cutout: Cutout name
+  name_tech: Technology name
+  name_layout: Layout name
+  name_spatial_units: Spatial units name
