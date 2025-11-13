@@ -83,5 +83,6 @@ use rule * from module_pv_wind_point as module_pv_wind_point_*
 rule nld_point:
     message:
         "Create capacity factors for onshore wind based on a point layout."
+    default_target: True
     input:
         "results/module_pv_wind/results/era5/NLD_NUTS2_onshore/wind_onshore_point/capacityfactors_wind_onshore_3MW.nc",
