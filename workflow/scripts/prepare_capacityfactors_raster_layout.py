@@ -1,12 +1,13 @@
 """Prepare PV capacityfactors, given a cutout, a layout, spatial units to aggregate to and technology specifications."""
 
 import _plots
-import backend_atlite
 import geopandas as gpd
 import rioxarray as rxr
 import xarray as xr
 import yaml
 from _schemas import Shapes
+
+import workflow.scripts._backend_atlite as _backend_atlite
 
 
 def read_yaml(filepath):
@@ -30,7 +31,7 @@ def prepare_capacityfactors_raster_layout(
     layout = layout.fillna(0)
 
     # compute capacityfactors
-    capacityfactors = backend_atlite.cf_agg_from_raster_layout(
+    capacityfactors = _backend_atlite.cf_agg_from_raster_layout(
         path_cutout=path_cutout,
         layout=layout,
         spatial_units=spatial_units,
