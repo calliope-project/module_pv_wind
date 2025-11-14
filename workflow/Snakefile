@@ -20,7 +20,7 @@ with open(workflow.source_path("internal/settings.yaml"), "r") as f:
 # This is necessary for integrating the snakemake module via reference to GitHub.
 workflow.source_path("scripts/_backend_atlite.py")
 workflow.source_path("scripts/_plots.py")
-workflow.source_path("scripts/_schema.py")
+workflow.source_path("scripts/_schemas.py")
 
 
 # Add all your includes here.
