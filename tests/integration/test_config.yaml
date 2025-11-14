@@ -14,7 +14,7 @@ module_pv_wind_point:
   download_cutout: False
   backend: atlite
   layout: point  # raster or point
-  aggregate: true
+  aggregate: True
   cutout_params:
     module: era5
     x: [3.4, 7.2]
