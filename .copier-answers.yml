@@ -7,7 +7,7 @@ author_family_name: Launer
 author_given_name: Jann
 github_org: calliope-project
 license: MIT
-module_description: This data module produces area potentials and capacity factors
-    for PV and wind at arbitrary spatial resolution.
-module_long_name: 'PV and wind area potentials and capacity factors '
+module_description: This data module produces capacity factors for PV and wind at
+    arbitrary spatial resolution.
+module_long_name: PV and wind capacity factors
 module_short_name: module_pv_wind

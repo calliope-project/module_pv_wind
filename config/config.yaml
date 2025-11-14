@@ -1,2 +1,11 @@
 # A minimal example of how to configure this module
-dummy_text: This is a user input.
+download_cutout: True
+backend: atlite
+layout: raster  # raster or point
+aggregate: true
+cutout_params:
+  module: era5
+  x: [3.4, 7.2]
+  y: [50.7, 53.5]
+  time: ["2017-01", "2017-02"]
+  features: ['height', 'wind', 'influx', 'temperature']

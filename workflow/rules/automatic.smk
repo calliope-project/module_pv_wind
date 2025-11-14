@@ -1,16 +1,16 @@
 """Rules to used to download automatic resource files."""
 
+if config["download_cutout"]:
 
-rule dummy_download:
-    message:
-        "Download the clio README file."
-    params:
-        url=internal["resources"]["automatic"]["dummy_readme"],
-    output:
-        readme="resources/automatic/dummy_readme.md",
-    log:
-        "logs/dummy_download.log",
-    conda:
-        "../envs/shell.yaml"
-    shell:
-        'curl -sSLo {output.readme} "{params.url}"'
+    path_cutout = ancient("resources/automatic/cutout_era5.nc")
+
+    rule download_cutout:
+        output:
+            "resources/automatic/cutout_era5.nc",
+        conda:
+            "../envs/atlite.yaml"
+        script:
+            "../scripts/download_cutout.py"
+
+else:
+    path_cutout = ancient("resources/user/cutout_{name_cutout}.nc")

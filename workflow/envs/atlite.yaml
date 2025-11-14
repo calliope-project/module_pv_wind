@@ -1,0 +1,12 @@
+name: atlite
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - pyyaml
+  - atlite>=0.4.1  # Need at least 0.4.1 for the new cdsapi
+  - cfgrib  # Explicitly adding because of https://github.com/PyPSA/atlite/issues/459
+  - rioxarray
+  - rasterio
+  - geopandas
+  - pandera-geopandas=0.24.0

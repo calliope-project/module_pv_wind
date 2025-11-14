@@ -1,36 +1,88 @@
 # Emulate a user configuring the module.
 configfile: workflow.source_path("./test_config.yaml")
 
-# Emulate how another workflow might create inputs for this module.
-rule create_external_input:
-    message: "Example of a rule external to your module."
-    output:
-        text_file = "results/module_pv_wind/resources/user/user_message.md"
-    run:
-        from pathlib import Path
-        from textwrap import dedent
-        text = dedent("""Modular workflows can be used by more than one project!
-            For example, this text comes from a file external to the module.
-            Try your best to make this workflow reusable so that others may benefit from your methods."""
-        )
-        file_path = Path(output.text_file)
-        with file_path.open("w") as f:
-            f.write(text)
 
-# Import the module and configure it.
+# Emulate how another workflow might create inputs for this module.
+rule copy_user_resources:
+    message:
+        "Copy user resources used in the tests to module."
+    input:
+        layout_points="../files/layout_points_NLD.csv",
+        layout_raster="../files/layout_raster_europe.tif",
+        shapes_nld="../files/NLD_NUTS2_onshore.parquet",
+        shapes_europe="../files/Europe_NUTS2_onshore.parquet",
+        cutout="../files/era5.nc",
+        tech_specs="../files/wind_onshore_3MW.yaml",
+    output:
+        layout_points="results/module_pv_wind/resources/user/layout/wind_onshore_point.csv",
+        layout_raster="results/module_pv_wind/resources/user/layout/wind_onshore_raster.tif",
+        shapes_nld="results/module_pv_wind/resources/user/spatial_units/NLD_NUTS2_onshore.parquet",
+        shapes_europe="results/module_pv_wind/resources/user/spatial_units/Europe_NUTS2_onshore.parquet",
+        cutout="results/module_pv_wind/resources/user/cutout_era5.nc",
+        tech_specs="results/module_pv_wind/resources/user/tech_specs/wind_onshore_3MW.yaml",
+    shell:
+        """
+        cp {input.layout_points} {output.layout_points}
+        cp {input.layout_raster} {output.layout_raster}
+        cp {input.shapes_nld} {output.shapes_nld}
+        cp {input.shapes_europe} {output.shapes_europe}
+        cp {input.cutout} {output.cutout}
+        cp {input.tech_specs} {output.tech_specs}
+        """
+
+
+# Import the module and configure it to use a raster layout.
 # `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
 # `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
-module module_pv_wind:
-    snakefile: "../../workflow/Snakefile"
-    config: config["module_pv_wind"]
-    prefix: "results/module_pv_wind/"
+module module_pv_wind_raster:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config["module_pv_wind_raster"]
+    prefix:
+        "results/module_pv_wind/"
+
 
 # rename all module rules with a prefix, to avoid naming conflicts.
-use rule * from module_pv_wind as module_pv_wind_*
+use rule * from module_pv_wind_raster as module_pv_wind_raster_*
+
 
 # Request something from the module
-rule all:
-    message: "A generic test case for your module."
+rule nld_raster:
+    message:
+        "Create capacity factors for onshore wind based on a raster layout."
     default_target: True
     input:
-        "results/module_pv_wind/results/combined_text.md"
+        "results/module_pv_wind/results/era5/NLD_NUTS2_onshore/wind_onshore_raster/capacityfactors_wind_onshore_3MW.nc",
+
+
+rule europe_raster:
+    message:
+        "Create capacity factors for onshore wind based on a raster layout."
+    input:
+        "results/module_pv_wind/results/era5/Europe_NUTS2_onshore/wind_onshore_raster/capacityfactors_wind_onshore_3MW.nc",
+
+
+# Import the module and configure it to use a point layout.
+# `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
+# `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
+module module_pv_wind_point:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config["module_pv_wind_point"]
+    prefix:
+        "results/module_pv_wind/"
+
+
+# rename all module rules with a prefix, to avoid naming conflicts.
+use rule * from module_pv_wind_point as module_pv_wind_point_*
+
+
+# Request something from the module
+rule nld_point:
+    message:
+        "Create capacity factors for onshore wind based on a point layout."
+    default_target: True
+    input:
+        "results/module_pv_wind/results/era5/NLD_NUTS2_onshore/wind_onshore_point/capacityfactors_wind_onshore_3MW.nc",

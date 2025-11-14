@@ -1,6 +1,6 @@
-# PV and wind area potentials and capacity factors 
+# PV and wind capacity factors
 
-This data module produces area potentials and capacity factors for PV and wind at arbitrary spatial resolution.
+This data module produces capacity factors for PV and wind at arbitrary spatial resolution.
 
 A modular `snakemake` workflow built for [`clio`](https://clio.readthedocs.io/) data modules.
 
@@ -23,7 +23,7 @@ pixi install --all
 For testing, simply run:
 
 ```shell
-pixi run test
+pixi run test-integration
 ```
 
 To view the documentation locally, use:
@@ -37,5 +37,5 @@ To test a minimal example of a workflow using this module:
 ```shell
 pixi shell    # activate this project's environment
 cd tests/integration/  # navigate to the integration example
-snakemake --use-conda  # run the workflow!
+snakemake --use-conda --cores 2  # run the workflow!
 ```
