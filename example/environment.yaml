@@ -1,0 +1,10 @@
+name: module_pv_wind_example
+channels:
+    - conda-forge
+    - bioconda    
+dependencies:
+    - rioxarray
+    - matplotlib
+    - geopandas
+    - atlite
+    - cdsapi
