@@ -30,7 +30,7 @@ def prepare_capacityfactors_raster_layout(
     layout = layout.fillna(0)
 
     # compute capacityfactors
-    capacityfactors = _backend_atlite.cf_agg_from_raster_layout(
+    capacityfactors = _backend_atlite.cf_aggregated_from_raster_layout(
         path_cutout=path_cutout, layout=layout, shapes=shapes, tech_specs=tech_specs
     )
 

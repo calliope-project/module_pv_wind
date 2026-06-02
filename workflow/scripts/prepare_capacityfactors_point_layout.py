@@ -30,7 +30,7 @@ def prepare_capacityfactors_point_layout(
     shapes = shapes.set_index("shape_id")
 
     # compute capacityfactors
-    capacityfactors = _backend_atlite.cf_agg_from_point_layout(
+    capacityfactors = _backend_atlite.cf_aggregated_from_point_layout(
         path_cutout=path_cutout, layout=layout, shapes=shapes, tech_specs=tech_specs
     )
 

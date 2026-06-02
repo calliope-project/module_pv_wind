@@ -8,7 +8,7 @@ import rasterio as rio
 import xarray as xr
 
 
-def cf_agg_from_point_layout(
+def cf_aggregated_from_point_layout(
     path_cutout: str | Path,
     layout: xr.DataArray,
     shapes: gpd.GeoDataFrame,
@@ -32,7 +32,7 @@ def cf_agg_from_point_layout(
     return capacityfactors
 
 
-def cf_agg_from_raster_layout(
+def cf_aggregated_from_raster_layout(
     path_cutout: str | Path,
     layout: xr.DataArray,
     shapes: gpd.GeoDataFrame,
