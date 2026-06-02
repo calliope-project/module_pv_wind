@@ -23,11 +23,11 @@ def cf_aggregated_from_point_layout(
     layout = cutout.layout_from_capacity_list(layout, col="capacity")
 
     # compute capacity factors
-    tech = tech_specs["tech"]
-    specs = tech_specs["specs"]
-    get_capacityfactors = getattr(cutout, tech)
+    get_capacityfactors = getattr(cutout, tech_specs["tech"])
 
-    capacityfactors = get_capacityfactors(shapes=shapes, layout=layout, **specs)
+    capacityfactors = get_capacityfactors(
+        shapes=shapes, layout=layout, **tech_specs["specs"]
+    )
 
     return capacityfactors
 
@@ -54,11 +54,11 @@ def cf_aggregated_from_raster_layout(
     )
 
     # compute capacity factors
-    tech = tech_specs["tech"]
-    specs = tech_specs["specs"]
-    get_capacityfactors = getattr(cutout, tech)
+    get_capacityfactors = getattr(cutout, tech_specs["tech"])
 
-    capacityfactors = get_capacityfactors(shapes=shapes, layout=layout_matched, **specs)
+    capacityfactors = get_capacityfactors(
+        shapes=shapes, layout=layout_matched, **tech_specs["specs"]
+    )
 
     return capacityfactors
 
