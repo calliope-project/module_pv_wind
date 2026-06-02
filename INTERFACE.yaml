@@ -6,8 +6,6 @@ resources:
     "layout/{name_layout}.tif": Raster layout file describing the spatial distribution of capacity.
     "layout/{name_layout}.parquet": Point layout file describing the spatial distribution of capacity.
     "spatial_units/{name_spatial_units}.parquet": Geometries of spatial units (e.g., administrative regions).
-  automatic:
-    "cutout_era5.nc": Cutout of meteorological data downloaded from ERA5.
 results:
   "{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc": Capacity factors for the specified technology.
 wildcards:
