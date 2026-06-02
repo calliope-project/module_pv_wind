@@ -46,10 +46,14 @@ def plot(path_capacityfactors, path_shapes, path_map):
     shapes = Shapes.validate(shapes)
     shapes = shapes.set_index("shape_id")
 
-    gdf_mean_cf = shapes.join(cf.mean(dim="time").to_dataframe(name="wind_onshore"))
+    gdf_mean_cf = shapes.join(
+        cf.mean(dim="time").to_dataframe(name="mean_capacityfactor")
+    )
 
     # plot a map of annual capacityfactors
-    fig, ax = _plots.map_capacity_factor(gdf_mean_cf=gdf_mean_cf, column="wind_onshore")
+    fig, ax = _plots.map_capacity_factor(
+        gdf_mean_cf=gdf_mean_cf, column="mean_capacityfactor"
+    )
     fig.savefig(path_map)
 
 
