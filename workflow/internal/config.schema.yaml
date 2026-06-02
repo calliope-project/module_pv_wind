@@ -23,7 +23,7 @@ properties:
     description: "The layout type, either raster or point."
   aggregate:
     type: boolean
-    description: "Whether to aggregate the data to spatial_units or not."
+    description: "Whether to aggregate the data to shapes or not."
   # if download_cutout is True, need to provide these parameters, which are used to download the cutout
   cutout_params:
     type: object

@@ -10,7 +10,7 @@ cmap_pv = LinearSegmentedColormap.from_list("cmap_pv", ["white", "orange"])
 def average_capacity_factors(
     cf: xr.DataArray, shapes: gpd.GeoDataFrame
 ) -> gpd.GeoDataFrame:
-    """Calculate average capacity factors per spatial unit."""
+    """Calculate average capacity factors per shape."""
     df_mean_cf = cf.mean(dim="time").to_dataframe(name="average_cf").reset_index()
     df_mean_cf.index.name = "id"
 

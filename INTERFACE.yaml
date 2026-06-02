@@ -5,11 +5,11 @@ resources:
     "tech_specs/{name_tech}.yaml": Technology specification of PV/wind.
     "layout/{name_layout}.tif": Raster layout file describing the spatial distribution of capacity.
     "layout/{name_layout}.parquet": Point layout file describing the spatial distribution of capacity.
-    "spatial_units/{name_spatial_units}.parquet": Geometries of spatial units (e.g., administrative regions).
+    "shapes/{shape}.parquet": Geometries of shapes (e.g., administrative regions).
 results:
-  "{name_cutout}/{name_spatial_units}/{name_layout}/capacityfactors_{name_tech}.nc": Capacity factors for the specified technology.
+  "{name_cutout}/{shape}/{name_layout}/capacityfactors_{name_tech}.nc": Capacity factors for the specified technology.
 wildcards:
   name_cutout: Cutout name
   name_tech: Technology name
   name_layout: Layout name
-  name_spatial_units: Spatial units name
+  shape: Shape name

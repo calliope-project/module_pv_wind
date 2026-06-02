@@ -11,7 +11,7 @@ import xarray as xr
 def cf_agg_from_point_layout(
     path_cutout: str | Path,
     layout: xr.DataArray,
-    spatial_units: gpd.GeoDataFrame,
+    shapes: gpd.GeoDataFrame,
     tech_specs: dict,
 ) -> xr.DataArray:
     """Aggregated capacity factors from a point layout."""
@@ -27,7 +27,7 @@ def cf_agg_from_point_layout(
     specs = tech_specs["specs"]
     get_capacityfactors = getattr(cutout, tech)
 
-    capacityfactors = get_capacityfactors(shapes=spatial_units, layout=layout, **specs)
+    capacityfactors = get_capacityfactors(shapes=shapes, layout=layout, **specs)
 
     return capacityfactors
 
@@ -35,7 +35,7 @@ def cf_agg_from_point_layout(
 def cf_agg_from_raster_layout(
     path_cutout: str | Path,
     layout: xr.DataArray,
-    spatial_units: gpd.GeoDataFrame,
+    shapes: gpd.GeoDataFrame,
     tech_specs: dict,
 ) -> xr.DataArray:
     """Aggregated capacity factors from a raster layout."""
@@ -58,9 +58,7 @@ def cf_agg_from_raster_layout(
     specs = tech_specs["specs"]
     get_capacityfactors = getattr(cutout, tech)
 
-    capacityfactors = get_capacityfactors(
-        shapes=spatial_units, layout=layout_matched, **specs
-    )
+    capacityfactors = get_capacityfactors(shapes=shapes, layout=layout_matched, **specs)
 
     return capacityfactors
 
@@ -68,7 +66,7 @@ def cf_agg_from_raster_layout(
 def cf_from_point_layout(
     cutout: atlite.Cutout,
     layout: xr.DataArray,
-    spatial_units: gpd.GeoDataFrame,
+    shapes: gpd.GeoDataFrame,
     tech_specs: dict,
 ) -> xr.DataArray:
     """Capacity factors from a point layout."""
@@ -78,7 +76,7 @@ def cf_from_point_layout(
 def cf_from_raster_layout(
     cutout: atlite.Cutout,
     layout: xr.DataArray,
-    spatial_units: gpd.GeoDataFrame,
+    shapes: gpd.GeoDataFrame,
     tech_specs: dict,
 ) -> xr.DataArray:
     """Capacity factors from a raster layout."""

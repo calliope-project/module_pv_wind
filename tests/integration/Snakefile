@@ -16,8 +16,8 @@ rule copy_user_resources:
     output:
         layout_points="results/module_pv_wind/resources/user/layout/wind_onshore_point.csv",
         layout_raster="results/module_pv_wind/resources/user/layout/wind_onshore_raster.tif",
-        shapes_nld="results/module_pv_wind/resources/user/spatial_units/NLD_NUTS2_onshore.parquet",
-        shapes_europe="results/module_pv_wind/resources/user/spatial_units/Europe_NUTS2_onshore.parquet",
+        shapes_nld="results/module_pv_wind/resources/user/shapes/NLD_NUTS2_onshore.parquet",
+        shapes_europe="results/module_pv_wind/resources/user/shapes/Europe_NUTS2_onshore.parquet",
         cutout="results/module_pv_wind/resources/user/cutout_era5.nc",
         tech_specs="results/module_pv_wind/resources/user/tech_specs/wind_onshore_3MW.yaml",
     shell:
