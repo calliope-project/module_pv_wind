@@ -70,7 +70,10 @@ def cf_from_point_layout(
     tech_specs: dict,
 ) -> xr.DataArray:
     """Capacity factors from a point layout."""
-    raise NotImplementedError
+    raise NotImplementedError(
+        "We are planning to support capacity factors from point layout, "
+        "without aggregating to shapes, but it is not implemented yet."
+    )
 
 
 def cf_from_raster_layout(
@@ -80,4 +83,7 @@ def cf_from_raster_layout(
     tech_specs: dict,
 ) -> xr.DataArray:
     """Capacity factors from a raster layout."""
-    raise NotImplementedError
+    raise NotImplementedError(
+        "We are planning to support capacity factors from raster layout, "
+        "without aggregating to shapes, but it is not implemented yet."
+    )
