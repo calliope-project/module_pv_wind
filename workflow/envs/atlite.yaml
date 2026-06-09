@@ -9,4 +9,4 @@ dependencies:
   - rioxarray
   - rasterio
   - geopandas
-  - pandera-geopandas=0.24.0
+  - pandera-geopandas=0.31.1
