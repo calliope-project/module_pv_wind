@@ -1,11 +1,10 @@
 """Prepare PV capacityfactors, given a cutout, a layout, shapes to aggregate to and technology specifications."""
 
 import _backend_atlite as _backend_atlite
-import _plots
 import geopandas as gpd
 import pandas as pd
-import xarray as xr
 import yaml
+from _plots import create_plot_map, create_plot_overview
 from _schemas import PointLayout, Shapes
 
 
@@ -38,24 +37,6 @@ def prepare_capacityfactors_point_layout(
     capacityfactors.to_netcdf(path_output)
 
 
-def plot(path_capacityfactors, path_shapes, path_map):
-    """Plot capacityfactors."""
-    # load inputs
-    cf = xr.open_dataarray(path_capacityfactors)
-    shapes = gpd.read_parquet(path_shapes)
-    shapes = Shapes.validate(shapes)
-    shapes = shapes.set_index("shape_id")
-    gdf_mean_cf = shapes.join(
-        cf.mean(dim="time").to_dataframe(name="mean_capacityfactor")
-    )
-
-    # plot a map of annual capacityfactors
-    fig, ax = _plots.map_capacity_factor(
-        gdf_mean_cf=gdf_mean_cf, column="mean_capacityfactor"
-    )
-    fig.savefig(path_map)
-
-
 if __name__ == "__main__":
     prepare_capacityfactors_point_layout(
         path_cutout=snakemake.input.cutout,
@@ -64,8 +45,13 @@ if __name__ == "__main__":
         path_layout=snakemake.input.layout,
         path_output=snakemake.output.data,
     )
-    plot(
+    create_plot_map(
         path_capacityfactors=snakemake.output.data,
         path_shapes=snakemake.input.shapes,
         path_map=snakemake.output.plot_map,
+    )
+    create_plot_overview(
+        path_capacityfactors=snakemake.output.data,
+        path_shapes=snakemake.input.shapes,
+        path_plot=snakemake.output.plot_overview,
     )

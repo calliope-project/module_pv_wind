@@ -18,6 +18,7 @@ pathvars:
     # Module results
     capacity_factors="<results>/{cutout}/{shape}/{layout}/capacityfactors_{tech}.nc",
     plot_map="<results>/{cutout}/{shape}/{layout}/capacityfactors_map_{tech}.png",
+    plot_overview="<results>/{cutout}/{shape}/{layout}/capacityfactors_overview_{tech}.png",
 
 
 # Load the example configuration. This will be overridden by users.
