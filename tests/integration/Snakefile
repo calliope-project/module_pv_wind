@@ -1,36 +1,25 @@
 # Emulate a user configuring the module.
 configfile: workflow.source_path("./test_config.yaml")
 
-# Emulate how another workflow might create inputs for this module.
-rule create_external_input:
-    message: "Example of a rule external to your module."
-    output:
-        text_file = "results/module_pv_wind/resources/user/user_message.md"
-    run:
-        from pathlib import Path
-        from textwrap import dedent
-        text = dedent("""Modular workflows can be used by more than one project!
-            For example, this text comes from a file external to the module.
-            Try your best to make this workflow reusable so that others may benefit from your methods."""
-        )
-        file_path = Path(output.text_file)
-        with file_path.open("w") as f:
-            f.write(text)
 
-# Import the module and configure it.
+# Import the module and configure it to use a point layout.
 # `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
 # `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
-module module_pv_wind:
-    snakefile: "../../workflow/Snakefile"
-    config: config["module_pv_wind"]
-    prefix: "results/module_pv_wind/"
+module module_pv_wind_point:
+    snakefile:
+        "../../workflow/Snakefile"
+    config:
+        config["module_pv_wind_point"]
+
 
 # rename all module rules with a prefix, to avoid naming conflicts.
-use rule * from module_pv_wind as module_pv_wind_*
+use rule * from module_pv_wind_point as module_pv_wind_point_*
+
 
 # Request something from the module
-rule all:
-    message: "A generic test case for your module."
+rule nld_point:
+    message:
+        "Create capacity factors for onshore wind based on a point layout."
     default_target: True
     input:
-        "results/module_pv_wind/results/combined_text.md"
+        "results/era5_2017/NLD_NUTS2_onshore/points_NLD/capacityfactors_wind_onshore_3MW.nc",
