@@ -20,7 +20,8 @@ def create_plot_map(path_capacityfactors, path_shapes, path_map):
         cf.mean(dim="time").to_dataframe(name="mean_capacityfactor")
     )
 
-    map_capacity_factor(gdf_mean_cf=gdf_mean_cf, column="mean_capacityfactor")
+    fig, ax = plt.subplots(tight_layout=True)
+    map_capacity_factor(gdf_mean_cf=gdf_mean_cf, column="mean_capacityfactor", ax=ax)
     plt.savefig(path_map)
 
 
@@ -34,7 +35,8 @@ def create_plot_overview(path_capacityfactors, path_shapes, path_plot):
 
     gdf_mean_cf = pd.merge(shapes[["shape_id", "country_id"]], cf_mean, on="shape_id")
 
-    plot_overview(cf=gdf_mean_cf, column="mean_capacityfactor")
+    fig, ax = plt.subplots(figsize=(8, 3), tight_layout=True)
+    plot_overview(cf=gdf_mean_cf, column="mean_capacityfactor", ax=ax)
     plt.savefig(path_plot)
 
 
@@ -96,18 +98,19 @@ def plot_overview(cf, column, ax=None, color="k"):
     ax.set_ylabel("Mean CF")
     ax.set_xlabel("Shapes")
 
-    return fig, ax
+    return ax
 
 
-def map_capacity_factor(gdf_mean_cf, column, figsize=(4, 4)):
-    fig, ax = plt.subplots(figsize=figsize, tight_layout=True)
+def map_capacity_factor(gdf_mean_cf, column, ax=None):
+    if not ax:
+        fig, ax = plt.subplots(tight_layout=True)
 
     gdf_mean_cf.plot(ax=ax, column=column, cmap=cmap_wind, legend=True, aspect=None)
     gdf_mean_cf.geometry.boundary.plot(ax=ax, color="black", linewidth=0.5)
     ax.set_title("Average Capacity Factor\nOnshore Wind")
     _blank_axis(ax)
 
-    return fig, ax
+    return ax
 
 
 def _blank_axis(ax):
