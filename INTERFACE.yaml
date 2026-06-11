@@ -12,26 +12,26 @@ pathvars:
       description: "location of module results."
   user_resources:
     cutout:
-      default: "<resources>/user/cutout_{name_cutout}.nc"
+      default: "<resources>/user/cutouts_{cutout}.nc"
       description: "Cutout of meteorological data provided by user."
     tech_specs:
-      default: "<resources>/user/tech_specs/{name_tech}.yaml"
+      default: "<resources>/user/tech_specs_{tech}.yaml"
       description: "Technology specification of PV/wind."
     layout_raster:
-      default: "<resources>/user/layout/{name_layout}.tif"
+      default: "<resources>/user/layouts_{layout}.tif"
       description: "Raster layout file describing the spatial distribution of capacity."
     layout_point:
-      default: "<resources>/user/layout/{name_layout}.parquet"
+      default: "<resources>/user/layouts_{layout}.parquet"
       description: "Point layout file describing the spatial distribution of capacity."
     shapes:
-      default: "<resources>/user/shapes/{shape}.parquet"
+      default: "<resources>/user/shapes_{shape}.parquet"
       description: "Geometries of shapes (e.g., administrative regions)."
   results:
     capacity_factors:
-      default: "<results>/{name_cutout}/{shape}/{name_layout}/capacityfactors_{name_tech}.nc"
+      default: "<results>/{cutout}/{shape}/{layout}/capacityfactors_{tech}.nc"
       description: Capacity factors for the specified technology.
 wildcards:
-  name_cutout: Cutout name
-  name_tech: Technology name
-  name_layout: Layout name
+  cutout: Cutout name
+  tech: Technology name
+  layout: Layout name
   shape: Shape name

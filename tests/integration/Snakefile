@@ -6,11 +6,6 @@ configfile: workflow.source_path("./test_config.yaml")
 # `snakefile:` specifies the module. It can use file paths and special github(...) / gitlab(...) markers
 # `prefix:` re-routes all input/output paths of the module, helping to avoid file conflicts.
 module module_pv_wind_point:
-    pathvars:
-        cutout="resources/user/cutout_era5.nc",
-        shapes="resources/user/shapes_{shape}.parquet",
-        layout_point="resources/user/layout_{layout}.csv",
-        tech_specs="resources/user/tech_specs_{tech}.yaml",
     snakefile:
         "../../workflow/Snakefile"
     config:
@@ -27,4 +22,4 @@ rule nld_point:
         "Create capacity factors for onshore wind based on a point layout."
     default_target: True
     input:
-        "results/module_pv_wind/results/era5/NLD_NUTS2_onshore/points_NLD/capacityfactors_wind_onshore_3MW.nc",
+        "results/era5_2017/NLD_NUTS2_onshore/points_NLD/capacityfactors_wind_onshore_3MW.nc",

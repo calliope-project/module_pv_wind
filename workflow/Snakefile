@@ -10,10 +10,10 @@ min_version("9.19")
 # This allows users to re-wire how the module is used in their workflow with ease.
 pathvars:
     # User resources
-    cutout="<resources>/user/cutout_{cutout}.nc",
+    cutout="<resources>/user/cutouts_{cutout}.nc",
     tech_specs="<resources>/user/tech_specs_{tech}.yaml",
-    layout_raster="<resources>/user/layout_{layout}.tif",
-    layout_point="<resources>/user/layout_{layout}.csv",
+    layout_raster="<resources>/user/layouts_{layout}.tif",
+    layout_point="<resources>/user/layouts_{layout}.csv",
     shapes="<resources>/user/shapes_{shape}.parquet",
     # Module results
     capacity_factors="<results>/{cutout}/{shape}/{layout}/capacityfactors_{tech}.nc",
